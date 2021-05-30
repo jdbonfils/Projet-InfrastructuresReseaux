@@ -1,0 +1,37 @@
+#!/bin/bash
+echo -e 'Construction du reseau de depart... \n'
+sudo ./build_architecture
+
+echo -e 'Configuration des VLANS... \n'
+sudo ./VLANS
+
+choix=0
+
+read -p 'Configuration du tunnel L2TPv3 : encapsulation (0)IP ou (1)UDP : ' choix
+if [ $choix -eq 1 ]; then
+	sudo ./scriptsTunnel/tunnel_L2TPv3_UDP;
+else
+	sudo ./scriptsTunnel/tunnel_L2TPv3_IP;
+fi
+echo -e 'Ajout du tunnel GRE (tunnel L2TPv3 actif par defaut)... \n'
+sudo ./scriptsTunnel/tunnel_GRE
+echo -e 'Configuration du DHCP le Routeur 1... \n'
+sudo ./scriptsDHCP/DHCPServeur
+
+choix="n"
+read -p 'Voulez-vous reconfigurer poste1 grace au DHCP ?  y/n :' choix
+if [ $choix = "y" ]; then
+	sudo ./scriptsDHCP/AutoConfig_Poste1_DHCP;
+fi
+
+choix="y"
+read -p 'Voulez-vous mettre en place un chiffrement IPsec sur le tunnel ?  y/n :' choix
+if [ $choix != "n" ]; then
+	sudo ./IPsec
+fi
+
+choix="y"
+read -p 'Voulez-vous bloquer la communication inter-VLANs ?  y/n :' choix
+if [ $choix != "n" ]; then
+	sudo ./blocage_vlan
+fi

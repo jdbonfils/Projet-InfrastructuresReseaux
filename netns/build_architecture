@@ -1,0 +1,200 @@
+#!/bin/bash -x
+# créé les namespaces tels qu'ils le sont dans le réseaux de départ du projet
+
+# créer les namespaces
+ip netns add rout1
+ip netns add rout2
+ip netns add routA
+ip netns add routB
+ip netns add poste1
+ip netns add poste2
+ip netns add poste3
+ip netns add poste4
+
+# créer les switches
+ovs-vsctl add-br internet 
+ovs-vsctl add-br resB 
+ovs-vsctl add-br resC 
+ovs-vsctl add-br resD
+ovs-vsctl add-br resE 
+ovs-vsctl add-br resF
+ovs-vsctl add-br resG 
+
+#Creation de liens
+ip link add rout1-eth0 type veth peer name resC-rout1
+ip link add rout1-eth1 type veth peer name resD-rout1
+ip link add rout1-eth2 type veth peer name resF-rout1
+
+ip link add rout2-eth0 type veth peer name resB-rout2
+ip link add rout2-eth1 type veth peer name resE-rout2
+ip link add rout2-eth2 type veth peer name resG-rout2
+
+ip link add routA-eth0 type veth peer name resC-routA
+ip link add routA-eth1 type veth peer name internet-routA
+
+ip link add routB-eth0 type veth peer name internet-routB
+ip link add routB-eth1 type veth peer name resB-routB
+
+ip link add poste1-eth0 type veth peer name resE-poste1
+
+ip link add poste2-eth0 type veth peer name resG-poste2
+
+ip link add poste3-eth0 type veth peer name resD-poste3
+
+ip link add poste4-eth0 type veth peer name resF-poste4
+
+# accrocher les liens aux namespaces
+ip link set rout1-eth0 netns rout1
+ip link set rout1-eth1 netns rout1
+ip link set rout1-eth2 netns rout1
+
+ip link set rout2-eth0 netns rout2
+ip link set rout2-eth1 netns rout2
+ip link set rout2-eth2 netns rout2
+
+ip link set routA-eth0 netns routA
+ip link set routA-eth1 netns routA
+
+ip link set routB-eth0 netns routB
+ip link set routB-eth1 netns routB
+
+ip link set poste1-eth0 netns poste1
+
+ip link set poste2-eth0 netns poste2
+
+ip link set poste3-eth0 netns poste3
+
+ip link set poste4-eth0 netns poste4
+
+# connecter les liens aux switch
+ovs-vsctl add-port internet internet-routA
+ovs-vsctl add-port internet internet-routB
+
+ovs-vsctl add-port resB resB-routB
+ovs-vsctl add-port resB resB-rout2
+
+ovs-vsctl add-port resC resC-routA
+ovs-vsctl add-port resC resC-rout1
+
+ovs-vsctl add-port resD resD-rout1
+ovs-vsctl add-port resD resD-poste3
+
+ovs-vsctl add-port resE resE-rout2
+ovs-vsctl add-port resE resE-poste1
+
+ovs-vsctl add-port resF resF-rout1
+ovs-vsctl add-port resF resF-poste4
+
+ovs-vsctl add-port resG resG-rout2
+ovs-vsctl add-port resG resG-poste2
+
+# activer les interfaces du namespace root
+ip link set dev internet up
+ip link set dev internet-routB up
+ip link set dev internet-routA up
+
+ip link set dev resB-routB up
+ip link set dev resB-rout2 up
+
+ip link set dev resC-routA up
+ip link set dev resC-rout1 up
+
+ip link set dev resD-rout1 up
+ip link set dev resD-poste3 up
+
+ip link set dev resE-rout2 up
+ip link set dev resE-poste1 up
+
+ip link set dev resF-rout1 up
+ip link set dev resF-poste4 up
+
+ip link set dev resG-rout2 up
+ip link set dev resG-poste2 up
+
+# activer les interfaces des namespaces
+ip netns exec rout1 ip link set dev rout1-eth0 up
+ip netns exec rout1 ip link set dev rout1-eth1 up
+ip netns exec rout1 ip link set dev rout1-eth2 up
+ip netns exec rout1 ip link set dev lo up
+
+ip netns exec rout2 ip link set dev rout2-eth0 up
+ip netns exec rout2 ip link set dev rout2-eth1 up
+ip netns exec rout2 ip link set dev rout2-eth2 up
+ip netns exec rout2 ip link set dev lo up
+
+ip netns exec routA ip link set dev routA-eth0 up
+ip netns exec routA ip link set dev routA-eth1 up
+ip netns exec routA ip link set dev lo up
+
+ip netns exec routB ip link set dev routB-eth0 up
+ip netns exec routB ip link set dev routB-eth1 up
+ip netns exec routB ip link set dev lo up
+
+ip netns exec poste1 ip link set dev poste1-eth0 up
+ip netns exec poste1 ip link set dev lo up
+
+ip netns exec poste2 ip link set dev poste2-eth0 up
+ip netns exec poste2 ip link set dev lo up
+
+ip netns exec poste3 ip link set dev poste3-eth0 up
+ip netns exec poste3 ip link set dev lo up
+
+ip netns exec poste4 ip link set dev poste4-eth0 up
+ip netns exec poste4 ip link set dev lo up
+
+
+
+# configurer les réseaux
+
+ip netns exec rout1 ip a add dev rout1-eth0 172.16.1.253/24
+ip netns exec rout1 ip a add dev rout1-eth1 192.168.100.254/24
+ip netns exec rout1 ip a add dev rout1-eth2 192.168.200.254/24
+
+ip netns exec rout2 ip a add dev rout2-eth0 172.16.2.253/24
+ip netns exec rout2 ip a add dev rout2-eth1 192.168.100.253/24
+ip netns exec rout2 ip a add dev rout2-eth2 192.168.200.253/24
+
+ip netns exec routA ip a add dev routA-eth0 172.16.1.254/24
+ip netns exec routA ip a add dev routA-eth1 10.87.0.1/24
+
+ip netns exec routB ip a add dev routB-eth0 10.87.0.2/24
+ip netns exec routB ip a add dev routB-eth1 172.16.2.254/24
+
+ip netns exec poste1 ip a add dev poste1-eth0 192.168.100.1/24
+ip netns exec poste2 ip a add dev poste2-eth0 192.168.200.1/24
+ip netns exec poste3 ip a add dev poste3-eth0 192.168.100.2/24
+ip netns exec poste4 ip a add dev poste4-eth0 192.168.200.2/24
+
+
+# configurer les routes
+
+ip netns exec routA ip r add 172.16.2.0/24 via 10.87.0.2
+ip netns exec routB ip r add 172.16.1.0/24 via 10.87.0.1
+ip netns exec rout1 ip r add 10.87.0.0/24 via 172.16.1.254
+ip netns exec rout2 ip r add 10.87.0.0/24 via 172.16.2.254
+
+
+#Configurer les routes par défauts
+
+ip netns exec routA ip r add default via 10.87.0.2
+ip netns exec routB ip r add default via 10.87.0.1
+ip netns exec rout1 ip r add default via 172.16.1.254
+ip netns exec rout2 ip r add default via 172.16.2.254
+ip netns exec poste1 ip r add default via 192.168.100.253
+ip netns exec poste2 ip r add default via 192.168.200.253
+ip netns exec poste3 ip r add default via 192.168.100.254
+ip netns exec poste4 ip r add default via 192.168.200.254
+
+
+#Activer le routage
+
+ip netns exec rout1 sudo sysctl net.ipv4.conf.all.forwarding=1
+ip netns exec rout2 sudo sysctl net.ipv4.conf.all.forwarding=1
+ip netns exec routA sudo sysctl net.ipv4.conf.all.forwarding=1
+ip netns exec routB sudo sysctl net.ipv4.conf.all.forwarding=1
+
+
+
+
+
+

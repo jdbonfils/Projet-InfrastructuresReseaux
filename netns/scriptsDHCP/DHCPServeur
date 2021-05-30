@@ -1,0 +1,8 @@
+#!/bin/bash -x
+
+# DHCP sur rout1
+
+#vlan100 : on donne une plage de 100 adresse allant de 1 à 100
+sudo  ip netns exec rout1 dnsmasq --interface=tunnel.100 --except-interface=lo --bind-interfaces  --dhcp-range=192.168.100.1,192.168.100.100,255.255.255.0 --dhcp-option=option:router,192.168.100.253
+#vlan200 : on donne une plage de 100 adresse allant de 1 à 100
+sudo  ip netns exec rout1 dnsmasq --interface=tunnel.200 --except-interface=lo --bind-interfaces  --dhcp-range=192.168.200.1,192.168.200.100,255.255.255.0 --dhcp-option=option:router,192.168.200.253

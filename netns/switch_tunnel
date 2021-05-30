@@ -1,0 +1,18 @@
+#!/bin/bash
+#Switch entre le tunnel GRE et L2TPv3
+var=$(sudo ip netns exec rout1 cat /sys/class/net/eoip1/operstate)
+if [ "$var" = "down" ];then
+	echo -e 'Desactivation du tunnel l2tpeth0 et activaation du tunnel GRE \n'
+	sudo ip netns exec rout1 ip link set dev l2tpeth0 down
+	sudo ip netns exec rout1 ip link set dev eoip1 up
+	
+	sudo ip netns exec rout2 ip link set dev l2tpeth0 down
+	sudo ip netns exec rout2 ip link set dev eoip1 up
+else
+	echo -e 'Desactivation du tunnel GRE et activation du tunnel l2tpeth0 \n'
+	sudo ip netns exec rout1 ip link set dev eoip1 down
+	sudo ip netns exec rout1 ip link set dev l2tpeth0 up
+
+	sudo ip netns exec rout2 ip link set dev eoip1 down
+	sudo ip netns exec rout2 ip link set dev l2tpeth0 up
+fi

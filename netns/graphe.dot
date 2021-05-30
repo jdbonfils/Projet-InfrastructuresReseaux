@@ -1,0 +1,200 @@
+digraph G { 
+    label = "Net Lab";
+    labelloc = top;
+ 
+    node [shape=record];
+    edge [dir=both];
+subgraph cluster_0 {
+		label = rout1;
+	
+        "rout1-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>rout1-eth0</b></td></tr>
+                <tr><td align="left">IP: 172.16.1.253/24</td></tr>
+            </table>
+        >];
+        "rout1-eth1" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>rout1-eth1</b></td></tr>
+                <tr><td align="left">IP: 192.168.100.254/24</td></tr>
+            </table>
+        >];
+        "rout1-eth2" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>rout1-eth2</b></td></tr>
+                <tr><td align="left">IP: 192.168.200.254/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_1 {
+		label = rout2;
+	
+        "rout2-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>rout2-eth0</b></td></tr>
+                <tr><td align="left">IP: 172.16.2.253/24</td></tr>
+            </table>
+        >];
+        "rout2-eth1" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>rout2-eth1</b></td></tr>
+                <tr><td align="left">IP: 192.168.100.253/24</td></tr>
+            </table>
+        >];
+        "rout2-eth2" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>rout2-eth2</b></td></tr>
+                <tr><td align="left">IP: 192.168.200.253/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_2 {
+		label = routA;
+	
+        "routA-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>routA-eth0</b></td></tr>
+                <tr><td align="left">IP: 172.16.1.254/24</td></tr>
+            </table>
+        >];
+        "routA-eth1" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>routA-eth1</b></td></tr>
+                <tr><td align="left">IP: 10.87.0.1/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_3 {
+		label = routB;
+	
+        "routB-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>routB-eth0</b></td></tr>
+                <tr><td align="left">IP: 10.87.0.2/24</td></tr>
+            </table>
+        >];
+        "routB-eth1" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>routB-eth1</b></td></tr>
+                <tr><td align="left">IP: 172.16.2.254/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_4 {
+		label = poste1;
+	
+        "poste1-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>poste1-eth0</b></td></tr>
+                <tr><td align="left">IP: 192.168.100.1/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_5 {
+		label = poste2;
+	
+        "poste2-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>poste2-eth0</b></td></tr>
+                <tr><td align="left">IP: 192.168.200.1/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_6 {
+		label = poste3;
+	
+        "poste3-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>poste3-eth0</b></td></tr>
+                <tr><td align="left">IP: 192.168.100.2/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_7 {
+		label = poste4;
+	
+        "poste4-eth0" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="lightblue"><b>poste4-eth0</b></td></tr>
+                <tr><td align="left">IP: 192.168.200.2/24</td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_8 {
+		label = internet;
+	
+        "internet" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="orange"><b>internet</b></td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_9 {
+		label = resB;
+	
+        "resB" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="orange"><b>resB</b></td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_10 {
+		label = resC;
+	
+        "resC" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="orange"><b>resC</b></td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_11 {
+		label = resD;
+	
+        "resD" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="orange"><b>resD</b></td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_12 {
+		label = resE;
+	
+        "resE" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="orange"><b>resE</b></td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_13 {
+		label = resF;
+	
+        "resF" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="orange"><b>resF</b></td></tr>
+            </table>
+        >];
+	}
+subgraph cluster_14 {
+		label = resG;
+	
+        "resG" [label=<
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+                <tr><td bgcolor="orange"><b>resG</b></td></tr>
+            </table>
+        >];
+	}
+ "internet"->"routA-eth1"; 
+ "internet"->"routB-eth0"; 
+ "resB"->"routB-eth1"; 
+ "resB"->"rout2-eth0"; 
+ "resC"->"routA-eth0"; 
+ "resC"->"rout1-eth0"; 
+ "resD"->"rout1-eth1"; 
+ "resD"->"poste3-eth0"; 
+ "resE"->"rout2-eth1"; 
+ "resE"->"poste1-eth0"; 
+ "resF"->"rout1-eth2"; 
+ "resF"->"poste4-eth0"; 
+ "resG"->"rout2-eth2"; 
+ "resG"->"poste2-eth0"; 
+}

@@ -1,0 +1,30 @@
+#!/bin/bash -x
+
+
+#Attribuer une adresse dans "internet" à la machine physique
+sudo ip a add dev internet 10.87.0.3/24
+
+#On modifie la route par defaut sur routeA vers internet
+sudo ip netns exec routA ip route del default via 10.87.0.2
+sudo ip netns exec routA ip route add default via 10.87.0.3
+
+#modifie l'adresse source des paquets en sortie sur rou1-eth0
+sudo ip netns exec rout1 iptables -t nat -o rout1-eth0 -A POSTROUTING -j MASQUERADE 
+#En prevision de la Q2 avec dnsmasq
+sudo ip netns exec rout2 iptables -t nat -o rout2-eth0 -A POSTROUTING -j MASQUERADE
+
+#Puisqu on fait du SNAT on a besoin de rajouter seulement une seule regle de routage sur la machine physique
+sudo ip route add 172.16.1.0/24 via 10.87.0.1
+#En prévision de quand rout2 sera le routeur de sortie pour poste 1 et 2
+sudo ip route add 172.16.2.0/24 via 10.87.0.2
+
+#On fait du MASQUERADING pour pouvoir pouvoir avoir une reponse d'internet
+sudo iptables -t nat -A POSTROUTING -o enp4s0f1 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o wlp3s0 -j MASQUERADE
+
+#On active la fonction de routage sur la VM/machine Linux
+sudo sysctl -w net.ipv4.conf.all.forwarding=1
+sudo sysctl -w net.ipv4.conf.all.rp_filter=0
+
+
+

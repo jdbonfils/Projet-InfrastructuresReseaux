@@ -1,0 +1,56 @@
+Internet Systems Consortium DHCP Client 4.3.5
+Copyright 2004-2016 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+
+RTNETLINK answers: Cannot assign requested address
+RTNETLINK answers: Cannot assign requested address
+Listening on LPF/poste1-eth0/9a:d1:8f:87:40:1d
+Sending on   LPF/poste1-eth0/9a:d1:8f:87:40:1d
+Listening on LPF/poste1-eth0.100/9a:d1:8f:87:40:1d
+Sending on   LPF/poste1-eth0.100/9a:d1:8f:87:40:1d
+Listening on LPF/erspan0/00:00:00:00:00:00
+Sending on   LPF/erspan0/00:00:00:00:00:00
+Listening on LPF/gretap0/00:00:00:00:00:00
+Sending on   LPF/gretap0/00:00:00:00:00:00
+Sending on   Socket/fallback
+DHCPDISCOVER on poste1-eth0 to 255.255.255.255 port 67 interval 3 (xid=0x1c50de00)
+DHCPREQUEST of 192.168.100.33 on poste1-eth0.100 to 255.255.255.255 port 67 (xid=0x292748c5)
+DHCPDISCOVER on erspan0 to 255.255.255.255 port 67 interval 3 (xid=0x23b43d7c)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over erspan0 interface.
+DHCPDISCOVER on gretap0 to 255.255.255.255 port 67 interval 3 (xid=0xc0a8ad35)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over gretap0 interface.
+receive_packet failed on erspan0: Network is down
+receive_packet failed on gretap0: Network is down
+DHCPREQUEST of 192.168.100.33 on poste1-eth0.100 to 255.255.255.255 port 67 (xid=0x292748c5)
+DHCPDISCOVER on gretap0 to 255.255.255.255 port 67 interval 3 (xid=0xc0a8ad35)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over gretap0 interface.
+DHCPDISCOVER on erspan0 to 255.255.255.255 port 67 interval 5 (xid=0x23b43d7c)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over erspan0 interface.
+DHCPDISCOVER on poste1-eth0 to 255.255.255.255 port 67 interval 4 (xid=0x1c50de00)
+DHCPDISCOVER on gretap0 to 255.255.255.255 port 67 interval 8 (xid=0xc0a8ad35)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over gretap0 interface.
+DHCPDISCOVER on poste1-eth0 to 255.255.255.255 port 67 interval 7 (xid=0x1c50de00)
+DHCPREQUEST of 192.168.100.33 on poste1-eth0.100 to 255.255.255.255 port 67 (xid=0x292748c5)
+DHCPDISCOVER on erspan0 to 255.255.255.255 port 67 interval 8 (xid=0x23b43d7c)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over erspan0 interface.
+DHCPDISCOVER on poste1-eth0 to 255.255.255.255 port 67 interval 13 (xid=0x1c50de00)
+DHCPDISCOVER on poste1-eth0.100 to 255.255.255.255 port 67 interval 3 (xid=0x5248ca34)
+DHCPDISCOVER on gretap0 to 255.255.255.255 port 67 interval 13 (xid=0xc0a8ad35)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over gretap0 interface.
+DHCPDISCOVER on erspan0 to 255.255.255.255 port 67 interval 19 (xid=0x23b43d7c)
+send_packet: Network is down
+dhclient.c:2438: Failed to send 300 byte long packet over erspan0 interface.
+DHCPDISCOVER on poste1-eth0.100 to 255.255.255.255 port 67 interval 4 (xid=0x5248ca34)
+DHCPREQUEST of 192.168.100.69 on poste1-eth0.100 to 255.255.255.255 port 67 (xid=0x34ca4852)
+DHCPOFFER of 192.168.100.69 from 192.168.100.254
+DHCPACK of 192.168.100.69 from 192.168.100.254
+cmp: EOF on /tmp/tmp.T86uFDH9b1 which is empty
+bound to 192.168.100.69 -- renewal in 1402 seconds.

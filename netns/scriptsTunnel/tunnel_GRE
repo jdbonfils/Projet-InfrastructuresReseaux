@@ -1,0 +1,10 @@
+#!/bin/bash -x
+
+#Ajout du tunnel GRE
+
+#Cote R1
+ip netns exec rout1 ip link add eoip1 type gretap remote 172.16.2.253 local 172.16.1.253 nopmtudisc 
+ip netns exec rout1 brctl addif tunnel eoip1
+#Cote R2
+ip netns exec rout2 ip link add eoip1 type gretap remote 172.16.1.253 local 172.16.2.253 nopmtudisc 
+ip netns exec rout2 brctl addif tunnel eoip1

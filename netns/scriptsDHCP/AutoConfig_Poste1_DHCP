@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Supprimer l'adresse statique du poste1
+sudo ip netns exec poste1 ip a del 192.168.100.1/24 dev poste1-eth0.100
+# Configurer dynamiquement l'adresse du poste1
+sudo ip netns exec poste1 dhclient -v
